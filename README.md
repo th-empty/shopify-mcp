@@ -45,6 +45,20 @@ As of January 1, 2026, new Shopify apps are created in the **Dev Dashboard** and
    - `read_products`, `write_products`
    - `read_customers`, `write_customers`
    - `read_orders`, `write_orders`
+   - `read_inventory`, `write_inventory`
+   - `read_fulfillments`, `write_fulfillments`
+   - `read_returns`, `write_returns`
+   - `read_draft_orders`, `write_draft_orders`
+   - `read_assigned_fulfillment_orders`, `write_assigned_fulfillment_orders`
+   - `read_shipping`, `write_shipping`
+   - `read_discounts`, `write_discounts`
+   - `read_order_edits`, `write_order_edits`
+   - `read_reports`
+   - `read_metaobjects`, `write_metaobjects`
+   - `read_metaobject_definitions`, `write_metaobject_definitions`
+   - `read_files`, `write_files`
+   - `read_translations`, `write_translations`
+   - `read_markets`, `write_markets`
 4. Install the app on your store
 5. Copy your **Client ID** and **Client Secret** from the app's API credentials
 
@@ -127,6 +141,7 @@ If you prefer to use environment variables instead of command-line arguments:
 1. Create a `.env` file with your Shopify credentials:
 
    **Client Credentials:**
+
    ```
    SHOPIFY_CLIENT_ID=your_client_id
    SHOPIFY_CLIENT_SECRET=your_client_secret
@@ -134,6 +149,7 @@ If you prefer to use environment variables instead of command-line arguments:
    ```
 
    **Static Access Token (legacy):**
+
    ```
    SHOPIFY_ACCESS_TOKEN=your_access_token
    MYSHOPIFY_DOMAIN=your-store.myshopify.com
@@ -177,7 +193,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
 ### Product Management (8 tools)
 
 1. **`get-products`**
-
    - Get all products or search by title with pagination and sorting
    - Inputs:
      - `searchTitle` (string, optional): Filter products by title (wraps in `title:*...*`)
@@ -188,14 +203,12 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `after` / `before` (string, optional): Pagination cursors
 
 2. **`get-product-by-id`**
-
    - Get a specific product by ID with full details including SEO, options, media, variants, and collections
    - Inputs:
      - `productId` (string, required): Shopify product GID
    - Returns: `productType`, `descriptionHtml`, `seo`, `options` (with `optionValues`), `media` (images), `variants`, `collections`, `tags`, `vendor`, price range, inventory
 
 3. **`create-product`**
-
    - Create a new product. When using `productOptions`, Shopify registers all option values but only creates one default variant (first value of each option, price $0). Use `manage-product-variants` with `strategy: REMOVE_STANDALONE_VARIANT` afterward to create all real variants with prices.
    - Inputs:
      - `title` (string, required): Title of the product
@@ -211,7 +224,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `collectionsToJoin` (array of strings, optional): Collection GIDs to add the product to
 
 4. **`update-product`**
-
    - Update an existing product's fields
    - Inputs:
      - `id` (string, required): Shopify product GID
@@ -229,13 +241,11 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `redirectNewHandle` (boolean, optional): If true, old handle redirects to new handle
 
 5. **`delete-product`**
-
    - Delete a product
    - Inputs:
      - `id` (string, required): Shopify product GID
 
 6. **`manage-product-options`**
-
    - Create, update, or delete product options (e.g. Size, Color)
    - Inputs:
      - `productId` (string, required): Shopify product GID
@@ -253,7 +263,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
        - `optionIds` (array of strings, required): Option GIDs to delete
 
 7. **`manage-product-variants`**
-
    - Create or update product variants in bulk
    - Inputs:
      - `productId` (string, required): Shopify product GID
@@ -271,7 +280,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
        - `optionValues` (array, optional): Option values, e.g. `[{ optionName: "Size", name: "A4" }]`
 
 8. **`delete-product-variants`**
-
    - Delete one or more variants from a product
    - Inputs:
      - `productId` (string, required): Shopify product GID
@@ -280,7 +288,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
 ### Customer Management (8 tools)
 
 1. **`get-customers`**
-
    - List customers with search, pagination, and sorting
    - Inputs:
      - `searchQuery` (string, optional): Freetext or Shopify query syntax (e.g. `"country:US tag:vip orders_count:>5"`)
@@ -290,14 +297,12 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `after` / `before` (string, optional): Pagination cursors
 
 2. **`get-customer-by-id`**
-
    - Get a single customer by ID with full details
    - Inputs:
      - `id` (string, required): Shopify customer ID (numeric only, e.g. `"6276879810626"`)
    - Returns: name, email, phone, addresses, tags, note, tax status, amount spent, order count, metafields
 
 3. **`create-customer`**
-
    - Create a new customer
    - Inputs:
      - `firstName` (string, optional): Customer's first name
@@ -311,7 +316,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `addresses` (array of objects, optional): Customer addresses (`address1`, `address2`, `city`, `provinceCode`, `zip`, `country`, `phone`)
 
 4. **`update-customer`**
-
    - Update a customer's information
    - Inputs:
      - `id` (string, required): Shopify customer ID (numeric only, e.g. `"6276879810626"`)
@@ -329,13 +333,11 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `metafields` (array of objects, optional): Customer metafields
 
 5. **`delete-customer`**
-
    - Delete a customer
    - Inputs:
      - `id` (string, required): Shopify customer ID (numeric only, e.g. `"6276879810626"`)
 
 6. **`customer-merge`**
-
    - Merge two customer records into one
    - Inputs:
      - `customerOneId` (string, required): GID of the first customer
@@ -343,7 +345,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `overrideFields` (object, optional): Override which fields to keep from which customer (firstName, lastName, email, phone, defaultAddress, note, tags)
 
 7. **`manage-customer-address`**
-
    - Create, update, or delete a customer's mailing address
    - Inputs:
      - `customerId` (string, required): Customer GID
@@ -355,7 +356,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
 ### Order Management (10 tools)
 
 1. **`get-orders`**
-
    - Get orders with filtering, pagination, and sorting
    - Inputs:
      - `status` (string, optional): `"any"`, `"open"`, `"closed"`, or `"cancelled"`. Default `"any"`
@@ -366,14 +366,12 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `after` / `before` (string, optional): Pagination cursors
 
 2. **`get-order-by-id`**
-
    - Get a specific order by ID with smart lookup — accepts order name (`#77235` or `77235`), numeric ID (`8054938337547`), or full GID (`gid://shopify/Order/...`)
    - Inputs:
      - `orderId` (string, required): Order name, numeric ID, or full GID
    - Returns: pricing, customer, shipping/billing addresses, line items, tags, notes, metafields, cancel reason, return status, discount codes, PO number, timestamps
 
 3. **`update-order`**
-
    - Update an existing order
    - Inputs:
      - `id` (string, required): Shopify order GID
@@ -387,7 +385,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `shippingAddress` (object, optional): Shipping address fields
 
 4. **`get-customer-orders`**
-
    - Get orders for a specific customer with pagination and sorting
    - Inputs:
      - `customerId` (string, required): Shopify customer ID (numeric only, e.g. `"6276879810626"`)
@@ -397,7 +394,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `after` / `before` (string, optional): Pagination cursors
 
 5. **`order-cancel`**
-
    - Cancel an order with options for refunding, restocking, and customer notification. **Irreversible.**
    - Inputs:
      - `orderId` (string, required): Order GID
@@ -408,20 +404,17 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `refund` (boolean, optional): Refund to original payment method
 
 6. **`order-close-open`**
-
    - Close or reopen an order
    - Inputs:
      - `orderId` (string, required): Order GID
      - `action` (string, required): `"close"` or `"open"`
 
 7. **`order-mark-as-paid`**
-
    - Mark an order as paid (for manual/offline payments)
    - Inputs:
      - `orderId` (string, required): Order GID
 
 8. **`create-fulfillment`**
-
    - Create a fulfillment (mark items as shipped) with optional tracking
    - Inputs:
      - `lineItemsByFulfillmentOrder` (array, required): Fulfillment orders and line items to fulfill
@@ -429,7 +422,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `notifyCustomer` (boolean, default: false): Send shipping notification
 
 9. **`refund-create`**
-
    - Create a full or partial refund with optional restocking
    - Inputs:
      - `orderId` (string, required): Order GID
@@ -439,7 +431,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `notify` (boolean, optional): Send refund notification
 
 10. **`create-draft-order`**
-
     - Create a draft order for phone/chat sales, invoicing, or wholesale
     - Inputs:
       - `lineItems` (array, required): Product variants (`variantId`) or custom items (`title` + price). Max 499
@@ -451,7 +442,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
 ### Draft Order Management (1 tool)
 
 1. **`complete-draft-order`**
-
    - Complete a draft order, converting it into a real order
    - Inputs:
      - `draftOrderId` (string, required): Draft order GID
@@ -460,7 +450,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
 ### Metafield Management (3 tools)
 
 1. **`get-metafields`**
-
    - Get metafields for any Shopify resource (products, orders, customers, variants, collections, etc.)
    - Inputs:
      - `ownerId` (string, required): GID of any resource
@@ -469,13 +458,11 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
      - `after` (string, optional): Pagination cursor
 
 2. **`set-metafields`**
-
    - Set metafields on any Shopify resource. Creates or updates up to 25 metafields atomically
    - Inputs:
      - `metafields` (array, required): Metafields to set, each with `ownerId`, `key`, `value`, and optional `namespace`, `type`
 
 3. **`delete-metafields`**
-
    - Delete metafields from any Shopify resource
    - Inputs:
      - `metafields` (array, required): Metafields to delete, each with `ownerId`, `namespace`, `key`
@@ -483,7 +470,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
 ### Inventory Management (1 tool)
 
 1. **`inventory-set-quantities`**
-
    - Set absolute inventory quantities for items at specific locations
    - Inputs:
      - `reason` (string, required): Reason for change (e.g. `"correction"`, `"cycle_count_available"`)
@@ -493,7 +479,6 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
 ### Tag Management (1 tool)
 
 1. **`manage-tags`**
-
    - Add or remove tags on any taggable resource (orders, products, customers, draft orders, articles)
    - Inputs:
      - `id` (string, required): GID of the resource
@@ -504,21 +489,21 @@ All list query tools (`get-products`, `get-customers`, `get-orders`, `get-custom
 
 The `get-orders` tool's `query` parameter supports [Shopify search syntax](https://shopify.dev/docs/api/usage/search-syntax):
 
-| Filter | Example |
-|--------|---------|
-| `name` | `name:#77235` |
-| `created_at` | `created_at:>2024-01-01` or `created_at:2024-01-01..2024-03-31` |
-| `updated_at` | `updated_at:>2024-06-01` |
-| `financial_status` | `financial_status:paid` |
-| `fulfillment_status` | `fulfillment_status:shipped` |
-| `status` | `status:open` |
-| `email` | `email:customer@example.com` |
-| `tag` / `tag_not` | `tag:vip tag_not:wholesale` |
-| `discount_code` | `discount_code:SUMMER20` |
-| `sku` | `sku:PROD-001` |
-| `risk_level` | `risk_level:high` |
-| `gateway` | `gateway:shopify_payments` |
-| `test` | `test:true` |
+| Filter               | Example                                                         |
+| -------------------- | --------------------------------------------------------------- |
+| `name`               | `name:#77235`                                                   |
+| `created_at`         | `created_at:>2024-01-01` or `created_at:2024-01-01..2024-03-31` |
+| `updated_at`         | `updated_at:>2024-06-01`                                        |
+| `financial_status`   | `financial_status:paid`                                         |
+| `fulfillment_status` | `fulfillment_status:shipped`                                    |
+| `status`             | `status:open`                                                   |
+| `email`              | `email:customer@example.com`                                    |
+| `tag` / `tag_not`    | `tag:vip tag_not:wholesale`                                     |
+| `discount_code`      | `discount_code:SUMMER20`                                        |
+| `sku`                | `sku:PROD-001`                                                  |
+| `risk_level`         | `risk_level:high`                                               |
+| `gateway`            | `gateway:shopify_payments`                                      |
+| `test`               | `test:true`                                                     |
 
 ## Debugging
 

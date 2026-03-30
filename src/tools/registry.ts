@@ -14,13 +14,19 @@ import { manageProductOptions } from "./manageProductOptions.js";
 import { getOrders } from "./getOrders.js";
 import { getOrderById } from "./getOrderById.js";
 import { updateOrder } from "./updateOrder.js";
+import { editOrder } from "./editOrder.js";
+import { getDraftOrders } from "./getDraftOrders.js";
+import { getDraftOrderById } from "./getDraftOrderById.js";
 import { createDraftOrder } from "./createDraftOrder.js";
 import { completeDraftOrder } from "./completeDraftOrder.js";
 import { orderCancel } from "./orderCancel.js";
 import { orderCloseOpen } from "./orderCloseOpen.js";
 import { orderMarkAsPaid } from "./orderMarkAsPaid.js";
 import { createFulfillment } from "./createFulfillment.js";
+import { cancelFulfillment } from "./cancelFulfillment.js";
 import { createRefund } from "./createRefund.js";
+import { getOrderReturns } from "./getOrderReturns.js";
+import { returnCreate } from "./returnCreate.js";
 
 // Customer tools
 import { getCustomers } from "./getCustomers.js";
@@ -40,6 +46,18 @@ import { deleteMetafields } from "./deleteMetafields.js";
 // Convenience / cross-resource tools
 import { manageTags } from "./manageTags.js";
 import { setInventoryQuantities } from "./setInventoryQuantities.js";
+import { adjustInventoryQuantities } from "./adjustInventoryQuantities.js";
+
+// Shipping tools
+import { getDeliveryProfiles } from "./getDeliveryProfiles.js";
+import { getCarrierServices } from "./getCarrierServices.js";
+
+// Analytics & Reports
+import { executeShopifyqlQuery } from "./executeShopifyqlQuery.js";
+
+// Discounts
+import { getDiscounts } from "./getDiscounts.js";
+import { createDiscountCodeBasic } from "./createDiscountCodeBasic.js";
 
 // Configuration & discovery tools
 import { getShopInfo } from "./getShopInfo.js";
@@ -60,6 +78,30 @@ import { getInventoryItems } from "./getInventoryItems.js";
 import { getPriceLists } from "./getPriceLists.js";
 import { getProductVariantsDetailed } from "./getProductVariantsDetailed.js";
 
+// Translations
+import { getShopLocales } from "./getShopLocales.js";
+import { getTranslatableResource } from "./getTranslatableResource.js";
+import { registerTranslation } from "./registerTranslation.js";
+
+// Markets
+import { createMarket } from "./createMarket.js";
+import { updateMarket } from "./updateMarket.js";
+import { deleteMarket } from "./deleteMarket.js";
+
+// Files
+import { getFiles } from "./getFiles.js";
+import { createFile } from "./createFile.js";
+import { deleteFile } from "./deleteFile.js";
+
+// Metaobjects
+import { getMetaobjects } from "./getMetaobjects.js";
+import { createMetaobject } from "./createMetaobject.js";
+import { updateMetaobject } from "./updateMetaobject.js";
+import { deleteMetaobject } from "./deleteMetaobject.js";
+import { createMetaobjectDefinition } from "./createMetaobjectDefinition.js";
+import { updateMetaobjectDefinition } from "./updateMetaobjectDefinition.js";
+import { deleteMetaobjectDefinition } from "./deleteMetaobjectDefinition.js";
+
 export const tools: ShopifyTool[] = [
   // Products (8)
   getProducts,
@@ -70,17 +112,23 @@ export const tools: ShopifyTool[] = [
   manageProductVariants,
   deleteProductVariants,
   manageProductOptions,
-  // Orders (10)
+  // Orders
   getOrders,
   getOrderById,
   updateOrder,
+  editOrder,
+  getDraftOrders,
+  getDraftOrderById,
   createDraftOrder,
   completeDraftOrder,
   orderCancel,
   orderCloseOpen,
   orderMarkAsPaid,
   createFulfillment,
+  cancelFulfillment,
   createRefund,
+  getOrderReturns,
+  returnCreate,
   // Customers (8)
   getCustomers,
   getCustomerById,
@@ -97,6 +145,15 @@ export const tools: ShopifyTool[] = [
   // Convenience (2)
   manageTags,
   setInventoryQuantities,
+  adjustInventoryQuantities,
+  // Shipping
+  getDeliveryProfiles,
+  getCarrierServices,
+  // Analytics
+  executeShopifyqlQuery,
+  // Discounts
+  getDiscounts,
+  createDiscountCodeBasic,
   // Configuration & discovery (5)
   getShopInfo,
   getMetafieldDefinitions,
@@ -113,4 +170,24 @@ export const tools: ShopifyTool[] = [
   getInventoryItems,
   getPriceLists,
   getProductVariantsDetailed,
+  // Translations
+  getShopLocales,
+  getTranslatableResource,
+  registerTranslation,
+  // Markets (mutations)
+  createMarket,
+  updateMarket,
+  deleteMarket,
+  // Files
+  getFiles,
+  createFile,
+  deleteFile,
+  // Metaobjects
+  getMetaobjects,
+  createMetaobject,
+  updateMetaobject,
+  deleteMetaobject,
+  createMetaobjectDefinition,
+  updateMetaobjectDefinition,
+  deleteMetaobjectDefinition,
 ];
