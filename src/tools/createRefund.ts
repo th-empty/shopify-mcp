@@ -26,6 +26,18 @@ const CreateRefundInputSchema = z.object({
     })
     .optional()
     .describe("Shipping cost refund"),
+  transactions: z
+    .array(
+      z.object({
+        parentId: z.string().describe("The ID of the parent transaction (e.g. the original capture or sale transaction gid over which to issue the refund)"),
+        amount: z.string().describe("The amount to refund in this transaction"),
+        gateway: z.string().optional().describe("The gateway used for the transaction"),
+        kind: z.string().describe("The kind of transaction, usually 'REFUND'"),
+        status: z.string().optional().describe("The status of the transaction, such as 'SUCCESS'"),
+      })
+    )
+    .optional()
+    .describe("The financial transactions to create for this refund (Required to change financial_status to refunded)"),
   note: z.string().optional().describe("Note attached to the refund"),
   notify: z.boolean().optional().describe("Whether to send refund notification to customer"),
   currency: z.string().optional().describe("Currency code if different from shop currency (presentment currency)"),
@@ -92,6 +104,9 @@ const createRefund = {
       }
       if (input.shipping) {
         refundInput.shipping = input.shipping;
+      }
+      if (input.transactions) {
+        refundInput.transactions = input.transactions;
       }
       if (input.note) {
         refundInput.note = input.note;
